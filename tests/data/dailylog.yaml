@@ -1,0 +1,2 @@
+default_log: /var/log/wtfo/wtf-daily-report.LOG
+version: 1

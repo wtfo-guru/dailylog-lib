@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "entries": {
+    "run-if-network.sh": {
+      "shown": 1744821600,
+      "suppressed": 1
+    },
+    "run-if-internet.sh": {
+      "shown": 1745865088,
+      "suppressed": 0
+    }
+  }
+}

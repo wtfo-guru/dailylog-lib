@@ -15,6 +15,11 @@ update:
 	poetry update --with test --with docs
 	pre-commit-update-repo.sh
 
+.PHONY: add-test
+add-test:
+	poetry add -G test $(pkg)
+	poetry update --with test
+
 .PHONY: vars
 vars:
 	@echo "PROJECT_NAME: $(PROJECT_NAME)"
