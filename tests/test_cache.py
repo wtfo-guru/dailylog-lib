@@ -38,6 +38,8 @@ def test_creation_default_config(fs: FakeFilesystem):
     """Test creation of default config."""
     cfg_fn = str(DEFAULTS.get("config", ""))
     cache_fn = str(DEFAULTS.get("cache", ""))
+    fs.create_dir(Path(cfg_fn).parent)
+    fs.create_dir(Path(cache_fn).parent)
     fs.add_real_file(cache_fn, target_path=cache_fn)
     fs.create_file(cfg_fn, contents=CONFIG_DATA)
     Cache()
