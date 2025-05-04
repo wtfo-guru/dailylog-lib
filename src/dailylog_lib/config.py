@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 
 from wtforglib.dirs import ensure_directory
-from wtforglib.files import load_yaml_file, write_yaml_file
+from wtforglib.files import load_yaml_file, safe_write_yaml_file
 from wtforglib.kinds import StrAnyDict
 
 from dailylog_lib.exceptions import FilePermError
@@ -131,4 +131,4 @@ class Config(Options):  # noqa: WPS214
             )
         cfg_path = self.config_path()
         ensure_directory(cfg_path.parent)
-        write_yaml_file(self.config_path(), self.config)
+        safe_write_yaml_file(self.config_path(), self.config)
