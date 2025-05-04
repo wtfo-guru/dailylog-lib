@@ -8,9 +8,9 @@ from dailylog_lib.constants import DEFAULTS
 class Options:
     """Class to manage the options."""
 
-    debug: int
-    test: bool
-    verbose: int
+    _debug: int
+    _test: bool
+    _verbose: int
     cache_fn: str
     config_fn: str
 
@@ -31,9 +31,9 @@ class Options:
         The function ensures that cache and config file paths are absolute and
         valid, defaulting to specific paths if not provided.
         """
-        self.debug = int(kwargs.get("debug", 0))
-        self.test = bool(kwargs.get("test", False))
-        self.verbose = int(kwargs.get("verbose", 0))
+        self._debug = int(kwargs.get("debug", 0))
+        self._test = bool(kwargs.get("test", False))
+        self._verbose = int(kwargs.get("verbose", 0))
         key = "cache"
         self.cache_fn = Options.validate_fn_absolute(key, str(kwargs.get(key, "")))
         key = "config"
@@ -41,15 +41,25 @@ class Options:
 
     def is_debug(self) -> bool:
         """Return True if debug option is greater than 0."""
-        return self.debug > 0
+        return self._debug > 0
 
     def is_test(self) -> bool:
         """Return True if test option is greater than 0."""
-        return self.test
+        return self._test
 
     def is_verbose(self) -> bool:
         """Return True if verbose option is greater than 0."""
-        return self.verbose > 0
+        return self._verbose > 0
+
+    @property
+    def debug_level(self) -> int:
+        """Return the debug level."""
+        return self._debug
+
+    @property
+    def verbose_level(self) -> int:
+        """Return the verbose level."""
+        return self._verbose
 
     def config_path(self) -> Path:
         """Return the config file path."""

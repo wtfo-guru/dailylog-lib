@@ -142,6 +142,13 @@ class Cache(Config):
         return rtn_val
 
     @classmethod
+    def t_stamp(cls) -> str:
+        """Return current time stamp."""
+        # WPS323 Found `%` string formatting
+        fmt = "%a %b %d %H:%M:%S %p %Z %Y"  # noqa: WPS323
+        return datetime.now(timezone.utc).astimezone().strftime(fmt)
+
+    @classmethod
     def append_daily(
         cls,
         label: str,
@@ -162,9 +169,7 @@ class Cache(Config):
         s_cnt : int
             Number of seconds to suppress screen output.
         """
-        # WPS323 Found `%` string formatting
-        fmt = "%a %b %d %H:%M:%S %p %Z %Y"  # noqa: WPS323
-        stamp = datetime.now(timezone.utc).astimezone().strftime(fmt)
+        stamp = Cache.t_stamp()
         with open(log_fn, "a") as daily_log:
             if s_cnt is None:  # no suppressed count
                 daily_log.write("{0} {1}: {2}\n".format(stamp, label, message))

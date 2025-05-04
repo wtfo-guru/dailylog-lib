@@ -3,7 +3,7 @@
 import types
 from pathlib import Path
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 HOME = Path.home()
 DEFAULTS = types.MappingProxyType(
