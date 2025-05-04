@@ -152,31 +152,31 @@ class Logger(Cache):
                 stamp = Cache.t_stamp()
                 sys.stderr.write("{0} {1}: {2}\n".format(stamp, label, message))
 
-    def debug(self, message, **kwargs: str):
+    def debug(self, message, **kwargs: bool | int | str):
         """Log a debug message."""
         if self._level <= logging.DEBUG:
             kwargs[LABEL] = "DEBUG"
             self.log(message, **kwargs)
 
-    def info(self, message, **kwargs: str):  # noqa: WPS110
+    def info(self, message, **kwargs: bool | int | str):  # noqa: WPS110
         """Log a info message."""
         if self._level <= logging.INFO:
             kwargs[LABEL] = "INFO"
             self.log(message, **kwargs)
 
-    def warning(self, message, **kwargs: str):
+    def warning(self, message, **kwargs: bool | int | str):
         """Log a warning message."""
         if self._level <= logging.WARNING:
             kwargs[LABEL] = WARNING
             self.log(message, **kwargs)
 
-    def error(self, message, **kwargs: str):
+    def error(self, message, **kwargs: bool | int | str):
         """Log a error message."""
         if self._level <= logging.ERROR:
             kwargs[LABEL] = "ERROR"
             self.log(message, **kwargs)
 
-    def critical(self, message, **kwargs: str):
+    def critical(self, message, **kwargs: bool | int | str):
         """Log a critical message."""
         if self._level <= logging.CRITICAL:
             kwargs[LABEL] = "CRITICAL"
