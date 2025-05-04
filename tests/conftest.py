@@ -9,7 +9,6 @@ from wtforglib.files import load_json_file, load_yaml_file
 from dailylog_lib.cache import CONST_CACHE_VERSION, Cache
 from dailylog_lib.config import CURRENT_CONFIG_VERSION  # CONST_DEFAULT_LOG
 from dailylog_lib.constants import DEFAULTS
-from tests.conftest import _occ_file, _occ_str
 
 CACHE_FN = "/tmp/daily.cache"
 CONFIG_FN = "/tmp/daily.config"
@@ -22,6 +21,17 @@ LOG_ALT = "/usr/local/var/log/daily.log"
 CONFIG_DATA = """default_log: /usr/local/var/log/daily.log
 version: 1
 """
+
+
+def _occ_str(needle: str, haystack: str) -> int:
+    """Count the number of times needle occurs in haystack."""
+    return haystack.count(needle)
+
+
+def _occ_file(fn: str, needle: str) -> int:
+    """Count the number of times needle occurs in file."""
+    with open(fn, "r") as fd:
+        return _occ_str(needle, fd.read())
 
 
 def test_creation_default_config(fs: FakeFilesystem):
