@@ -24,7 +24,7 @@ version: 1
 """
 
 
-def test_creation_default_config(fs: FakeFilesystem):
+def test_creation_default_config(fs: FakeFilesystem) -> None:
     """Test creation of default config."""
     cfg_fn = str(DEFAULTS.get("config", ""))
     cache_fn = str(DEFAULTS.get("cache", ""))
@@ -42,7 +42,7 @@ def test_creation_default_config(fs: FakeFilesystem):
 
 def test_creation_non_default_log(
     fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]
-):
+) -> None:
     """Test use/creation of non default log."""
     # cfg_fn = str(DEFAULTS.get("config", ""))
     # cache_fn = str(DEFAULTS.get("cache", ""))
@@ -55,7 +55,7 @@ def test_creation_non_default_log(
     assert _occ_file(LOG_FN, MESSAGE) == 1
 
 
-def test_creation_set_default_log(fs: FakeFilesystem):  # noqa: WPS218
+def test_creation_set_default_log(fs: FakeFilesystem) -> None:  # noqa: WPS218
     """Test setting alternate default log."""
     logger = Cache(cache=CACHE_FN, config=CONFIG_FN)
     with pytest.raises(FileNotFoundError):
@@ -73,7 +73,7 @@ def test_creation_set_default_log(fs: FakeFilesystem):  # noqa: WPS218
     assert config_data.get("default_log", 0) == LOG_FN
 
 
-def test_caching(fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]):
+def test_caching(fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]) -> None:
     """Test only first message to stderr."""
     # cfg_fn = str(DEFAULTS.get("config", ""))
     # cache_fn = str(DEFAULTS.get("cache", ""))
@@ -88,7 +88,9 @@ def test_caching(fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]):
     assert _occ_file(LOG_FN, MESSAGE) == 3
 
 
-def test_caching_quietly(fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]):
+def test_caching_quietly(
+    fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]
+) -> None:
     """Test only first message to stderr."""
     # cfg_fn = str(DEFAULTS.get("config", ""))
     # cache_fn = str(DEFAULTS.get("cache", ""))

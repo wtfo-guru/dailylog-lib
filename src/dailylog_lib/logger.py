@@ -121,22 +121,22 @@ class Logger(Cache):
         super().__init__(**kwargs)
         self._level = log_level(kwargs.get("level", WARNING))
 
-    def log(self, message, **kwargs: bool | int | str) -> None:
+    def log(self, message: str, **kwargs: bool | int | str) -> None:
         """Log a message with specified parameters, handling suppression and caching.
 
         Parameters
         ----------
         message : str
             The message to log.
-        **kwargs : dict
-            Additional keyword arguments:
+        kwargs : dict
+            Keyword arguments that can include:
             - caller (str): Caller name, optional.
             - key (str): Unique key for the cache record, optional.
             - label (str): Log level label, defaults to "ERROR".
-            - logfn (str): Path to the log file, defaults to the default log.
+            - logfn (str): Path to the log file, defaults to the default log if key set.
             - quiet (bool): If True, suppresses terminal output.
             - suppress (int): Number of seconds to suppress repeated messages,
-                defaults to CONST_DAY.
+            defaults to CONST_DAY.
         """
         valor = kwargs.get("caller", "")
         if valor:
@@ -152,31 +152,31 @@ class Logger(Cache):
                 stamp = Cache.t_stamp()
                 sys.stderr.write("{0} {1}: {2}\n".format(stamp, label, message))
 
-    def debug(self, message, **kwargs: bool | int | str):
+    def debug(self, message: str, **kwargs: bool | int | str) -> None:
         """Log a debug message."""
         if self._level <= logging.DEBUG:
             kwargs[LABEL] = "DEBUG"
             self.log(message, **kwargs)
 
-    def info(self, message, **kwargs: bool | int | str):  # noqa: WPS110
+    def info(self, message: str, **kwargs: bool | int | str) -> None:  # noqa: WPS110
         """Log a info message."""
         if self._level <= logging.INFO:
             kwargs[LABEL] = "INFO"
             self.log(message, **kwargs)
 
-    def warning(self, message, **kwargs: bool | int | str):
+    def warning(self, message: str, **kwargs: bool | int | str) -> None:
         """Log a warning message."""
         if self._level <= logging.WARNING:
             kwargs[LABEL] = WARNING
             self.log(message, **kwargs)
 
-    def error(self, message, **kwargs: bool | int | str):
+    def error(self, message: str, **kwargs: bool | int | str) -> None:
         """Log a error message."""
         if self._level <= logging.ERROR:
             kwargs[LABEL] = "ERROR"
             self.log(message, **kwargs)
 
-    def critical(self, message, **kwargs: bool | int | str):
+    def critical(self, message: str, **kwargs: bool | int | str) -> None:
         """Log a critical message."""
         if self._level <= logging.CRITICAL:
             kwargs[LABEL] = "CRITICAL"
