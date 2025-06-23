@@ -97,7 +97,7 @@ class Config(Options):  # noqa: WPS214
         str
             Path to the default log
         """
-        return self.config.get("default_log", CONST_DEFAULT_LOG)
+        return str(self.config.get("default_log", CONST_DEFAULT_LOG))
 
     @classmethod
     def validate_existing_path(cls, path: Path) -> None:

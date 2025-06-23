@@ -15,8 +15,10 @@
 .. automodule:: dailylog_lib.exceptions
     :members:
 
-.. automodule:: dailylog_lib.logger
+.. automodule:: dailylog_lib.foos
     :members:
+
+.. automodule:: dailylog_lib.logger
     :members:
 
 .. automodule:: dailylog_lib.options

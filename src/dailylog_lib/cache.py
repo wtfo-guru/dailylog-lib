@@ -102,7 +102,7 @@ class Cache(Config):
         super().__init__(**kwargs)
         self._load_cache()
 
-    def log_message(self, key: str, message: str, **kwargs) -> bool:
+    def log_message(self, key: str, message: str, **kwargs: bool | int | str) -> bool:
         """Log a message with specified parameters, handling suppression and caching.
 
         Parameters
@@ -111,7 +111,7 @@ class Cache(Config):
             Unique key for the cache record.
         message : str
             The message to log.
-        **kwargs : dict
+        kwargs : dict
             Additional keyword arguments:
                 - label (str): Log level label, defaults to "ERROR".
                 - logfn (str): Path to the log file, defaults to the default log.
@@ -126,14 +126,14 @@ class Cache(Config):
             False otherwise.
         """
         rtn_val = False
-        label = kwargs.get("label", "ERROR")
-        log_fn = kwargs.get("logfn", self.default_log())
+        label = str(kwargs.get("label", "ERROR"))
+        log_fn = str(kwargs.get("logfn", self.default_log()))
         if kwargs.get("quiet", False):
             Cache.append_daily(label, message, log_fn)
             rtn_val = True
         else:
             record: CacheRecord = self._get_record(key)
-            if not record.suppress(kwargs.get("suppress", CONST_DAY)):
+            if not record.suppress(int(kwargs.get("suppress", CONST_DAY))):
                 sys.stderr.write("{0}: {1}\n".format(label, message))
                 rtn_val = True
             Cache.append_daily(label, message, log_fn, record.suppressed)
