@@ -10,9 +10,12 @@ BUMP_VERSION = $(shell grep ^current_version .bumpversion.cfg | awk '{print $$NF
 CONST_VERSION = $(shell grep ^VERSION $(PACKAGE_DIR)/constants.py | awk '{print $$NF}'|tr -d '"')
 TEST_MASK ?= tests/*.py
 
-.PHONY: update
-update:
+.PHONY: poetry-update
+poetry-update:
 	poetry update --with test --with docs
+
+.PHONY: update
+update: poetry-update safety
 	pre-commit-update-repo.sh
 
 .PHONY: add-test
@@ -39,13 +42,30 @@ ifneq ($(PROJECT_VERSION), $(CONST_VERSION))
 endif
 	@echo "Versions are equal $(PROJECT_VERSION), $(BUMP_VERSION), $(CONST_VERSION)"
 
+.PHONY: changelog-check
+changelog-check:
+ifneq (,$(findstring dev,$(PROJECT_VERSION)))
+	$(error Cannot pull request when dev version)
+else ifeq (,$(shell grep $(PROJECT_VERSION) CHANGELOG.md))
+	$(error No changelog entry for $(PROJECT_VERSION))
+else ifneq (,$(shell grep Unreleased CHANGELOG.md))
+	$(error Unreleased section in CHANGELOG.md)
+else
+	@echo "Changelog entry found for $(PROJECT_VERSION)"
+endif
+
 .PHONY: black
 black:
 	poetry run isort $(PACKAGE_DIR) $(TEST_MASK)
 	poetry run black $(PACKAGE_DIR) $(TEST_MASK)
 
+.PHONY: ruff
+ruff: black
+	poetry run ruff format $(PACKAGE_DIR) $(TEST_MASK)
+	poetry run ruff check $(PACKAGE_DIR) $(TEST_MASK)
+
 .PHONY: mypy
-mypy: black
+mypy: ruff
 	poetry run mypy $(PACKAGE_DIR) $(TEST_MASK)
 
 .PHONY: lint
@@ -78,11 +98,11 @@ publish-test: build
 
 .PHONY: safety
 safety:
-	safety scan --full-report
+	safety --proxy-host squid.metaorg.com --proxy-port 3128 --proxy-protocol http scan --full-report
 
 .PHONY: nitpick
 nitpick:
-	poetry run nitpick -p . check
+	nitpick -p . check
 
 .PHONY: test
 test: nitpick lint package unit
@@ -91,9 +111,9 @@ test: nitpick lint package unit
 citest: lint package unit
 
 .PHONY: build
-build: version-sanity safety clean-build test
+build: version-sanity changelog-check safety clean-build test
 	poetry build
-ifdef SYNCH_WHEELS
+ifdef SYNC_WHEELS
 	sync-wheels.sh dist/$(PROJECT_NAME)-$(WHEEL_VERSION)-py3-none-any.whl $(WHEELS)
 endif
 
