@@ -44,6 +44,7 @@ pytest = "^8.3.5"
 pytest-cov = "^6.1.1"
 darglint = "^1.8.1"
 pyfakefs = "^5.8.0"
+ruff = "^0.14.8"
 
 [tool.poetry.group.docs]
 optional = true
