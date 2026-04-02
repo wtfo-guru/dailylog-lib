@@ -1,13 +1,13 @@
 [project]
 name = "dailylog-lib"
-version = "0.2.5-dev0"
+version = "0.2.5-dev1"
 description = "A minimal logger that will suppress all but first message in a specified time to screen"
 dynamic = ["classifiers"]
 authors = [
-    {name = "Quien Sabe",email = "qs5779@mail.com"}
+    {name = "Quien Sabe",email = "qs5779@pm.me"}
 ]
 readme = "README.md"
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.11,<4.0"
 dependencies = [
     "wtforglib (>=1.1.1,<2.0.0)"
 ]
@@ -16,7 +16,6 @@ dependencies = [
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -30,21 +29,21 @@ packages = [
 ]
 
 
-[tool.poetry.group.test]
+[tool.poetry.group.dev]
 optional = true
 
-[tool.poetry.group.test.dependencies]
-isort = "^7.0"
+[tool.poetry.group.dev.dependencies]
+isort = "^8.0"
 black = "^26.3.1"
-mypy = "^1.15.0"
+mypy = "^1.0"
 wemake-python-styleguide = "^1.1.0"
 flake8-pytest-style = "^2.1.0"
 doc8 = "^2.0"
-pytest = "^8.3.5"
-pytest-cov = "^6.1.1"
-darglint = "^1.8.1"
-pyfakefs = "^5.8.0"
-ruff = "^0.14.8"
+pytest = "^9.0"
+pytest-cov = "^7.0"
+darglint = "^1.0"
+pyfakefs = "^6.0"
+ruff = "^0.15.0"
 
 [tool.poetry.group.docs]
 optional = true
@@ -59,5 +58,11 @@ tomli = "^2.0"
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.ruff.lint]
+external = ["WPS"]
+
+[tool.black]
+target-version = ["py311", "py312", "py313"]
+
 [tool.nitpick]
-style = "https://www.wtfo-guru.com/.well-known/nitpick-wtf-style.toml"
+style = "github://qs5779/devtools/nitpick/nitpick-wtf-style.toml"
