@@ -43,7 +43,7 @@ pytest = "^9.0"
 pytest-cov = "^7.0"
 darglint = "^1.0"
 pyfakefs = "^6.0"
-ruff = "^0.15.0"
+ruff = "^0.15.12"
 
 [tool.poetry.group.docs]
 optional = true
