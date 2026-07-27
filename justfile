@@ -52,19 +52,13 @@ changelog-check:
     echo "Changelog entry found for {{PROJECT_VERSION}}"
   fi
 
-isort:
-	@poetry run isort {{PACKAGE_DIR}} {{TEST_FILES}}
+ruff:
+	@poetry run ruff check --fix {{PACKAGE_DIR}} {{TEST_FILES}}
 
-black: isort
-	@poetry run black {{PACKAGE_DIR}} {{TEST_FILES}}
-
-mypy: black
+mypy: ruff
 	@poetry run mypy {{PACKAGE_DIR}} {{TEST_FILES}}
 
-ruff: mypy
-	@poetry run ruff check {{PACKAGE_DIR}} {{TEST_FILES}}
-
-lint: ruff
+lint: mypy
 	@poetry run flake8 {{PACKAGE_DIR}} {{TEST_FILES}}
 
 package:
@@ -87,9 +81,9 @@ nitpick:
 
 test: nitpick lint package unit
 
-citest: lint package unit
-
 candidate: test
+
+citest: lint package unit
 
 poetry-update:
 	@poetry update --with dev
@@ -99,12 +93,13 @@ update: poetry-update safety
 
 clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and Python artifacts
 
-clean-build:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  if podman images | grep localhost/{{ PROJECT_NAME }}; then
-    podman images | grep localhost/{{ PROJECT_NAME }} | awk '{ print $3 }' | sort | uniq | xargs podman image rm -f
-  fi
+clean-build: ## remove build artifacts
+	@rm -fr build/
+	@rm -fr docs/_build
+	@rm -fr dist/
+	@rm -fr .eggs/
+	@find . -name '*.egg-info' -exec rm -fr {} +
+	@find . -name '*.egg' -exec rm -f {} +
 
 clean-pyc: ## remove Python file artifacts
 	@find . -name '*.pyc' -exec rm -f {} +

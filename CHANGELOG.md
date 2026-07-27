@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - poetry update reconciled a security issue urllib2 => 2.7.0 # dev 4
+- use ruff instead of isort,black # dev 6
 
 ## [0.2.4] - 2026-01-08
 

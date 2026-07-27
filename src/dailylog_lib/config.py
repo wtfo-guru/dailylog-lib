@@ -68,7 +68,7 @@ class Config(Options):  # noqa: WPS214
         """
         version = config.get("version", 0)
         if version != CURRENT_CONFIG_VERSION:
-            raise ValueError("Unknown config version: {0}".format(version))
+            raise ValueError(f"Unknown config version: {version}")
         return config
 
     @classmethod
@@ -85,9 +85,9 @@ class Config(Options):  # noqa: WPS214
         if path.exists():
             Config.validate_existing_path(path)
         elif not path.parent.is_dir():
-            raise FileNotFoundError("Directory not found: {0}".format(path.parent))
+            raise FileNotFoundError(f"Directory not found: {path.parent}")
         elif not os.access(path.parent, os.W_OK):
-            raise FilePermError("Not writable: {0}".format(path.parent))
+            raise FilePermError(f"Not writable: {path.parent}")
 
     def default_log(self) -> str:
         """Returns the path to the default log.
@@ -111,9 +111,9 @@ class Config(Options):  # noqa: WPS214
             FilePermError: when path exists but is not writable
         """
         if not path.is_file():
-            raise FileNotFoundError("Not a file: {0}".format(path))
+            raise FileNotFoundError(f"Not a file: {path}")
         if not os.access(path, os.W_OK):
-            raise FilePermError("Not writable: {0}".format(path))
+            raise FilePermError(f"Not writable: {path}")
 
     def _load_config(self) -> StrAnyDict:
         """Load configuration from file."""
@@ -127,7 +127,7 @@ class Config(Options):  # noqa: WPS214
         """Save configuration to file."""
         if self.is_debug():
             print(  # noqa: WPS421
-                "Saving configuration to file: {0}".format(self.config_path())
+                f"Saving configuration to file: {self.config_path()}"
             )
         cfg_path = self.config_path()
         ensure_directory(cfg_path.parent)

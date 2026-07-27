@@ -22,7 +22,7 @@ def test_cached_logger(fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]) -
     logger = Logger()
     logger.log(MESSAGE, logfn=LOG_FN, label="INFO", key=CACHE_KEY)
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     assert _occ_str(MESSAGE, err) == 1
     assert _occ_file(LOG_FN, MESSAGE) == 1
 
@@ -39,7 +39,7 @@ def test_logger_level_default(
     logger.warning(MESSAGE, logfn=LOG_FN, caller="testing")
     logger.info(MESSAGE, logfn=LOG_FN, caller="testing")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     assert _occ_str(MESSAGE, err) == 1
     assert _occ_file(LOG_FN, MESSAGE) == 1
 
@@ -56,7 +56,7 @@ def test_logger_level_debug(
     logger.info(MESSAGE, logfn=LOG_FN, caller="testing")
     logger.warning(MESSAGE, logfn=LOG_FN, caller="testing")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     assert _occ_str(MESSAGE, err) == 3
     assert _occ_file(LOG_FN, MESSAGE) == 3
 
@@ -71,7 +71,7 @@ def test_logger_level_info(
     logger = Logger(level="INFO")
     logger.info(MESSAGE, logfn=LOG_FN, caller="testing")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     match = MATCH_FMT.format("INFO", "testing")
     assert _occ_str(match, err) == 1
     assert _occ_file(LOG_FN, match) == 1
@@ -87,7 +87,7 @@ def test_logger_level_warning(
     logger = Logger()
     logger.warning(MESSAGE, logfn=LOG_FN, caller="testing")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     match = MATCH_FMT.format("WARNING", "testing")
     assert _occ_str(match, err) == 1
     assert _occ_file(LOG_FN, match) == 1
@@ -101,7 +101,7 @@ def test_logger_level_error(
     logger = Logger()
     logger.error(MESSAGE, logfn=LOG_FN, caller="testing")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     match = MATCH_FMT.format("ERROR", "testing")
     assert _occ_str(match, err) == 1
     assert _occ_file(LOG_FN, match) == 1
@@ -115,7 +115,7 @@ def test_logger_level_critical(
     logger = Logger()
     logger.critical(MESSAGE, logfn=LOG_FN, caller="testing")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     match = MATCH_FMT.format("CRITICAL", "testing")
     assert _occ_str(match, err) == 1
     assert _occ_file(LOG_FN, match) == 1
