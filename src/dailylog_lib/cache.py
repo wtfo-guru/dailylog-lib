@@ -1,8 +1,7 @@
 """Top level module cache for dailylog-lib."""
 
 import sys
-from datetime import datetime, timezone
-from typing import Dict, Optional
+from datetime import UTC, datetime
 
 from wtforglib.dirs import ensure_directory
 from wtforglib.files import load_json_file, write_json_file
@@ -20,7 +19,7 @@ class CacheRecord:
     shown: int
     suppressed: int
 
-    def __init__(self, d_obj: Optional[Dict[str, int]] = None) -> None:
+    def __init__(self, d_obj: dict[str, int] | None = None) -> None:
         """Class constructor.
 
         Parameters
@@ -47,7 +46,7 @@ class CacheRecord:
         bool
             True if suppressed
         """
-        now = int(datetime.now(timezone.utc).timestamp())
+        now = int(datetime.now(UTC).timestamp())
         if now - self.shown > stifle:
             self.shown = now
             self.suppressed = 0
@@ -55,7 +54,7 @@ class CacheRecord:
         self.suppressed += 1
         return True
 
-    def to_dict(self) -> Dict[str, int]:
+    def to_dict(self) -> dict[str, int]:
         """Convert instance to dict.
 
         Returns
@@ -65,7 +64,7 @@ class CacheRecord:
         """
         return {"shown": self.shown, "suppressed": self.suppressed}
 
-    def _from_dict(self, d_obj: Dict[str, int]) -> None:
+    def _from_dict(self, d_obj: dict[str, int]) -> None:
         """Assign instance data from dict.
 
         Parameters
@@ -134,7 +133,7 @@ class Cache(Config):
         else:
             record: CacheRecord = self._get_record(key)
             if not record.suppress(int(kwargs.get("suppress", CONST_DAY))):
-                sys.stderr.write("{0}: {1}\n".format(label, message))
+                sys.stderr.write(f"{label}: {message}\n")
                 rtn_val = True
             Cache.append_daily(label, message, log_fn, record.suppressed)
             self.cache["entries"][key] = record.to_dict()
@@ -146,7 +145,7 @@ class Cache(Config):
         """Return current time stamp."""
         # WPS323 Found `%` string formatting
         fmt = "%a %b %d %H:%M:%S %p %Z %Y"  # noqa: WPS323
-        return datetime.now(timezone.utc).astimezone().strftime(fmt)
+        return datetime.now(UTC).astimezone().strftime(fmt)
 
     @classmethod
     def append_daily(
@@ -154,7 +153,7 @@ class Cache(Config):
         label: str,
         message: str,
         log_fn: str,
-        s_cnt: Optional[int] = None,
+        s_cnt: int | None = None,
     ) -> None:
         """Append a message to the specified log file.
 
@@ -172,10 +171,10 @@ class Cache(Config):
         stamp = Cache.t_stamp()
         with open(log_fn, "a") as daily_log:
             if s_cnt is None:  # no suppressed count
-                daily_log.write("{0} {1}: {2}\n".format(stamp, label, message))
+                daily_log.write(f"{stamp} {label}: {message}\n")
             else:
                 daily_log.write(
-                    "{0} {1}: {2} [{3}]\n".format(stamp, label, message, s_cnt),
+                    f"{stamp} {label}: {message} [{s_cnt}]\n",
                 )
             daily_log.close()
 

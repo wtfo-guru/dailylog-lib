@@ -1,6 +1,6 @@
 [project]
 name = "dailylog-lib"
-version = "0.2.5-dev6"
+version = "0.2.5-dev7"
 description = "A minimal logger that will suppress all but first message in a specified time to screen"
 dynamic = ["classifiers"]
 authors = [
@@ -33,8 +33,6 @@ packages = [
 optional = true
 
 [tool.poetry.group.dev.dependencies]
-isort = "^8.0"
-black = "^26.3.1"
 mypy = "^2.0"
 wemake-python-styleguide = "^1.1.0"
 flake8-pytest-style = "^2.1.0"
@@ -43,7 +41,7 @@ pytest = "^9.0"
 pytest-cov = "^7.0"
 darglint = "^1.0"
 pyfakefs = "^6.0"
-ruff = "^0.15.0"
+ruff = "^0.16.0"
 
 [tool.poetry.group.docs]
 optional = true
@@ -61,8 +59,8 @@ build-backend = "poetry.core.masonry.api"
 [tool.ruff.lint]
 external = ["WPS"]
 
-[tool.black]
-target-version = ["py311", "py312", "py313"]
+[tool.ruff.lint.pycodestyle]
+max-line-length = 88
 
 [tool.nitpick]
-style = "github://qs5779/devtools/nitpick/nitpick-wtf-style.toml"
+style = "github://qs5779/devtools/nitpick/nitpick-ruff-style.toml"

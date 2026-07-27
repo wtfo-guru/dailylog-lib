@@ -87,12 +87,7 @@ def log_level(level: int | str) -> int:
             level = int(level)
         else:
             return _label_to_level(level)
-
-    for key, valor in LOG_LEVELS.items():
-        if level == valor:
-            return level
-
-    return logging.WARNING
+    return LOG_LEVELS.get(str(level).upper(), logging.WARNING)
 
 
 class Logger(Cache):
@@ -140,7 +135,7 @@ class Logger(Cache):
         """
         valor = kwargs.get("caller", "")
         if valor:
-            message = "{0} - {1}".format(valor, message)
+            message = f"{valor} - {message}"
         if "key" in kwargs:
             self.log_message(str(kwargs.pop("key")), message, **kwargs)
         else:
@@ -150,7 +145,7 @@ class Logger(Cache):
                 Cache.append_daily(label, message, log_fn)
             if not kwargs.get("quiet", False):
                 stamp = Cache.t_stamp()
-                sys.stderr.write("{0} {1}: {2}\n".format(stamp, label, message))
+                sys.stderr.write(f"{stamp} {label}: {message}\n")
 
     def debug(self, message: str, **kwargs: bool | int | str) -> None:
         """Log a debug message."""

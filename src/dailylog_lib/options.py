@@ -87,8 +87,8 @@ class Options:
         if file_name == "":
             file_name = str(DEFAULTS.get(file_key, ""))
             if file_name == "":
-                raise ValueError("{0} path name cannot be empty".format(file_key))
+                raise ValueError(f"{file_key} path name cannot be empty")
         path = Path(file_name)
         if not path.is_absolute():
-            raise ValueError("{0} path name must be absolute".format(file_key))
+            raise ValueError(f"{file_key} path name must be absolute")
         return str(path)

@@ -50,7 +50,7 @@ def test_creation_non_default_log(
     logger = Cache()
     logger.log_message(CACHE_KEY, MESSAGE, logfn=LOG_FN, label="INFO")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     assert _occ_str(MESSAGE, err) == 1
     assert _occ_file(LOG_FN, MESSAGE) == 1
 
@@ -83,7 +83,7 @@ def test_caching(fs: FakeFilesystem, capsys: pytest.CaptureFixture[str]) -> None
     logger.log_message(CACHE_KEY, MESSAGE, logfn=LOG_FN, label="WARNING")
     logger.log_message(CACHE_KEY, MESSAGE, logfn=LOG_FN, label="INFO")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     assert _occ_str(MESSAGE, err) == 1
     assert _occ_file(LOG_FN, MESSAGE) == 3
 
@@ -100,6 +100,6 @@ def test_caching_quietly(
     logger.log_message(CACHE_KEY, MESSAGE, quiet=True, logfn=LOG_FN, label="WARNING")
     logger.log_message(CACHE_KEY, MESSAGE, quiet=True, logfn=LOG_FN, label="INFO")
     assert Path(LOG_FN).is_file()
-    out, err = capsys.readouterr()
+    _out, err = capsys.readouterr()
     assert _occ_str(MESSAGE, err) == 0
     assert _occ_file(LOG_FN, MESSAGE) == 3
