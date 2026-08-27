@@ -1429,20 +1429,23 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 
 [[package]]
 name = "wemake-python-styleguide"
-version = "1.7.0"
+version = "1.8.0"
 description = "The strictest and most opinionated python linter ever"
 optional = false
 python-versions = "<4.0,>=3.10"
 groups = ["dev"]
 files = [
-    {file = "wemake_python_styleguide-1.7.0-py3-none-any.whl", hash = "sha256:afec09f29e86fa5ce758d5279cd0a5d261982fa156fbf4f8192e387e64e259e1"},
-    {file = "wemake_python_styleguide-1.7.0.tar.gz", hash = "sha256:d7af4d971064b8998467fecf3164bc74331974a38ab5e8aee2fe67ddbcb680fd"},
+    {file = "wemake_python_styleguide-1.8.0-py3-none-any.whl", hash = "sha256:9e9319f348170ec97bb7d6c5ab9455b2eabdf66974963a747a70d4d3c281566c"},
+    {file = "wemake_python_styleguide-1.8.0.tar.gz", hash = "sha256:fa71e7e202d1d913eedc36290160c196bdf815ab5694d202a181be3d1a9dcf9e"},
 ]
 
 [package.dependencies]
 attrs = "*"
 flake8 = ">=7.3,<8.0"
 pygments = ">=2.19,<3.0"
+
+[package.extras]
+mcp = ["mcp[cli] (>=2.0,<3.0)"]
 
 [[package]]
 name = "wtforglib"
@@ -1464,4 +1467,4 @@ types-pyyaml = ">=6.0.12,<7.0.0"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<4.0"
-content-hash = "a702dbb7352ec674afc77a503b763b898d03d30a09f0ec27e926720ecb1b8571"
+content-hash = "2ec0bc47512872ae939ceb7366c0c67be289d7f3188c28657ed4e61fc587b5a4"

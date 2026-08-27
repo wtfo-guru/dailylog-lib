@@ -34,7 +34,7 @@ optional = true
 
 [tool.poetry.group.dev.dependencies]
 mypy = "^2.0"
-wemake-python-styleguide = "^1.1.0"
+wemake-python-styleguide = "^1.8.0"
 flake8-pytest-style = "^2.1.0"
 doc8 = "^2.0"
 pytest = "^9.0"
