@@ -26,7 +26,7 @@ repos:
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     # Ruff version.
-    rev: v0.16.0
+    rev: v0.16.4
     hooks:
       # Run the linter.
       - id: ruff-check
@@ -39,10 +39,10 @@ repos:
     hooks:
       - id: flake8
         args: ['--max-line-length=88', '--show-source']
-        additional_dependencies: [wemake-python-styleguide >= 1.5.0]
+        additional_dependencies: [wemake-python-styleguide >= 1.6.1]
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.16.5
+    rev: v4.18.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
