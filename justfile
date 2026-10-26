@@ -52,8 +52,11 @@ changelog-check:
     echo "Changelog entry found for {{PROJECT_VERSION}}"
   fi
 
-ruff:
-	@poetry run ruff check --fix {{PACKAGE_DIR}} {{TEST_FILES}}
+black:
+  @poetry run black {{PACKAGE_DIR}} {{TEST_FILES}}
+
+ruff: black
+  @poetry run ruff check --fix {{PACKAGE_DIR}} {{TEST_FILES}}
 
 mypy: ruff
 	@poetry run mypy {{PACKAGE_DIR}} {{TEST_FILES}}

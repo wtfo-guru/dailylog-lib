@@ -126,9 +126,7 @@ class Config(Options):  # noqa: WPS214
     def _save_config(self) -> None:
         """Save configuration to file."""
         if self.is_debug():
-            print(  # noqa: WPS421
-                f"Saving configuration to file: {self.config_path()}"
-            )
+            print(f"Saving configuration to file: {self.config_path()}")  # noqa: WPS421
         cfg_path = self.config_path()
         ensure_directory(cfg_path.parent)
         safe_write_yaml_file(self.config_path(), self.config)
