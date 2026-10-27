@@ -1,6 +1,6 @@
 [project]
 name = "dailylog-lib"
-version = "0.2.5-dev10"
+version = "0.2.5-dev11"
 description = "A minimal logger that will suppress all but first message in a specified time to screen"
 dynamic = ["classifiers"]
 authors = [
@@ -41,8 +41,8 @@ pytest = "^9.0"
 pytest-cov = "^7.0"
 darglint = "^1.0"
 pyfakefs = "^6.0"
-ruff = "^0.16.0"
-black = "^26.10.1"
+ruff = "^0.17.0"
+black = "^26.0"
 
 [tool.poetry.group.docs]
 optional = true
