@@ -71,13 +71,7 @@ unit:
 	@poetry run pytest {{TEST_FILES}}
 
 safety:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  if head -1 /etc/systemd/resolved.conf.d/local.conf | grep -q roaming ; then
     safety scan --full-report
-  else
-    safety --proxy-host squid.metaorg.com --proxy-port 3128 --proxy-protocol http scan --full-report
-  fi
 
 nitpick:
 	@nitpick -p . check
