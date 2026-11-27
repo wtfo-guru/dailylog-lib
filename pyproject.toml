@@ -40,7 +40,7 @@ doc8 = "^2.0"
 pytest = "^9.0"
 pytest-cov = "^7.0"
 darglint = "^1.0"
-pyfakefs = "^6.0"
+pyfakefs = "^6.3"
 ruff = "^0.17.0"
 black = "^26.0"
 
